@@ -1,32 +1,89 @@
 var appname = angular.module('appname', []);
 appname.controller('appCtrl', ['$scope',
   function($scope) {
-    $scope.greeting = { text: 'Sup bitchass' };
+    $scope.json = 
 
-    $scope.json = {
-  "metaData": {
-     "columns": {
-     "rank": {"label": "Rank"},
-     "url": {"label": "URL"},
-     "domainAuthority": {"label": "Domain Authority"},
-     "exactKeywordMatch": {"label": "Exact Keyword Match"},
-     "metric1": {"label": "metric1"}
-   }
-  }, 
-  "data": [
-   {
-     "rank": 1,
-     "url": "http://asdfasdfsdf.com/alksdjf",
-     "domainAuthority": 45.432342,
-     "exactKeywordMatch": true,
-     "metric1": "asdf"
-     },
-     {
-     "rank": 2,
-     "url": "http://abcdefg.hij",
-     "domainAuthority": 25.23723,
-     "exactKeywordMatch": false,
-     "metric1": "qwerty"
-     }
-   ]}
+{
+  "keyword": "medical billing software",
+  "testingStatus": {
+    "approved": false,
+    "issue": false,
+    "notes": "these are <b>notes</b>"         
+  },
+  "columns": [
+    {
+      "columnDef": {
+        "id": "rank",
+        "label": "Rank"
+      },
+      "testingStatus": {
+        "approved": false,
+        "issue": false,
+        "notes": "these are <b>notes</b>"       
+      }
+    },
+    {
+      "columnDef": {
+        "id": "url",
+        "label": "Url"
+      },
+      "testingStatus": {
+        "approved": false,
+        "issue": false,
+        "notes": "these are <b>notes</b>"       
+      }
+    },
+    {
+      "columnDef": {
+        "id": "metric1",
+        "label": "Metric 1"
+      },
+      "testingStatus": {
+        "approved": false,
+        "issue": false,
+        "notes": "these are <b>notes</b>"       
+      }
+    }
+    // more columns...
+  ],
+  "rows": [ 
+    {
+      "rowData": {
+        "rank": {
+          "value": 1,
+          "testingStatus": {
+            "approved": false,
+            "issue": false,
+            "notes": "these are <b>notes</b>"         
+          }
+        },
+        "url": {
+          "value": "http://laskjflaj.co",
+          "testingStatus": {
+            "approved": false,
+            "issue": false,
+            "notes": "these are <b>notes</b>"         
+          }
+        },
+        "metric1": {
+          "value": 12.1,
+          "testingStatus": {
+            "approved": false,
+            "issue": false,
+            "notes": "these are <b>notes</b>"         
+          }
+        }
+      },
+      "testingStatus": {
+        "approved": false,
+        "issue": false,
+        "notes": "these are <b>notes</b>"
+      }
+    }
+    // more rows...
+  ]
+}
+
+
+
 }]);

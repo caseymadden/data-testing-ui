@@ -29,29 +29,4 @@ appname.controller('appCtrl', ['$scope',
      "metric1": "qwerty"
      }
    ]}
-
-
-  // $scope.json_header_example = [
-  //   {"label": "Header0"},
-  //   {"label": "Header1"},
-  //   {"label": "Header2"}
-  // ]
-
-  // $scope.json_body_example = [
-  //   {"body_label": "value0"},
-  //   {"body_label": "value1"},
-  //   {"body_label": "value2"},
-  // ]
-
-  // $scope.json_header_example2 = [
-  //   {"metaData": {
-  //     {"label": "Header0"},
-  //     {"label": "Header1"},
-  //     {"label": "Header2"}
-  //   },
-  //     {"label": "Header0"},
-  //     {"label": "Header1"},
-  //     {"label": "Header2"}
-  //   }
-  // ]
 }]);

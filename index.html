@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="appname">
+<head>
+  <meta charset="utf-8"/>
+  <!-- Load AngularJS, AngularJS Route, AngularJS+Bootstrap(ui.bootstrap),jQuery,BootstrapJS,and table.js -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular-route.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.1.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="table.js"></script>
+  <style>
+  /* You can remove this. It's just to make it look interactive */
+  table{
+    cursor:pointer;
+    height:500px;
+    width:800px;
+    overflow-x:scroll;
+    overflow-y:scroll;
+  }
+  </style>
+</head>
+<body>
+
+    <div class="container" ng-controller="appCtrl">
+    	<h1>Strong beta data testing UI</h1>
+    	<table class="table table-striped table-condensed table-bordered">
+    		<thead>
+          <tr><td ng-repeat="(k,v) in json.columns"  ng-click="toggleShowModal(v.columnDef.label)" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }} {{ v.testingStatus.approved }}</td></tr>
+    		</thead>
+    		<tbody>
+    			<tr ng-repeat="row in json.rows" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
+            <!-- row.rowData = rowData object, gives access to rank, URL, metric1 -->
+            <!-- k = array index of json.columns array -->
+            <!-- v = columnDef object-->
+    				<td ng-repeat="(k,v) in json.columns" ng-click="toggleShowModal(row.rowData[v.columnDef.id].value)" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
+    			</tr>
+    		</tbody>
+    	</table>
+
+      <view-modal title="Feedback" visible="showModal">
+        <form role="form">
+          <div class="form-group">
+            <span>You clicked : {{ returnClickedValue }}</span><br></br>
+            <label for="comment">Note : </label>
+            <textarea class="form-control custom-control" rows="3" style="resize:none" ng-model="note"></textarea>
+            <span class="input-group-addon btn btn-success" ng-click="submitFeedback(returnClickedValue,true,false,note)">Looks good</span>
+            <span class="input-group-addon btn btn-danger" ngRequired="" ng-click="submitFeedback(returnClickedValue,false,true,note)">Looks bad</span>
+          </div>
+        </form>
+      </view-modal>
+
+      Feedback Value : {{ feedbackValue }}<br>
+      Feedback Approved : {{ feedbackApproved }}<br>
+      Feedback Issue : {{ feedbackIssue }}<br>
+      Feedback Note : {{ feedbackNote }}<br>
+
+    </div>
+
+</body>
+</html>
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>HTML5 Document</title>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+	<!-- Load AngularJS -->
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+   <script src="table.js"></script>
+
+   <style>
+   html, body {
+   	height:100%;
+   }
+    iframe{
+    	height:100%;
+    	width:100%;
+    }
+    .frame {
+    	height:80%;
+    	width:50%;
+    }
+   </style>
+</head>
+
+ <body ng-app="appname" ng-controller="appCtrl">
+ <div class="container">
+  <div class="form-group">
+    <label for="url">Enter a URL</label>
+    <div class="row">
+     <input type="text" class="form-control col-md-8" id="url" style="width:500px;" ng-model="url" >
+     <input type="button" value="Go!" class="btn btn-primary col-md-1" style="margin: 0 0 0 5px" ng-click="getUrl(url)">
+     <div class="col-md-3"></div>
+     </div>
+     
+  	 <div style="margin-top: 10px">
+     <input type="button" value="Approve" class="btn btn-success" ng-click="submitScraperFeedback(true,false,'Scraper feedback was approved.')">
+     <input type="button" value="Issue" class="btn btn-danger" ng-click="show=true">
+     <div ng-hide="!show" style="margin-top: 10px">
+     <label for="comment">Comment:</label>
+  	 <textarea class="form-control" rows="5" id="comment" style="width:500px" ng-model="commentSection"></textarea>
+  	 <input type="button" value="Submit" class="btn btn-primary" style="margin-top: 5px;" ng-click="submitScraperFeedback(false,true,comment_section); show=false">
+     </div>
+     </div>
+   </div>
+  </div>
+    <div class="frame col-md-6"><iframe src="{{ inputUrl }}"></iframe></div>
+    <div class="frame col-md-6"><iframe src="{{ inputUrl }}"></iframe></div>
+ </body>
+</html>

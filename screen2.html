@@ -17,7 +17,7 @@
 
 	<!-- Load AngularJS -->
    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
-   <script src="table.js"></script>
+   <script src="urlCompare.js"></script>
 
    <style>
    html, body {
@@ -34,7 +34,7 @@
    </style>
 </head>
 
- <body ng-app="appname" ng-controller="appCtrl">
+ <body ng-app="compareApp" ng-controller="compareScreenCtrl">
  <div class="container">
   <div class="form-group">
     <label for="url">Enter a URL</label>
@@ -50,7 +50,7 @@
      <div ng-hide="!show" style="margin-top: 10px">
      <label for="comment">Comment:</label>
   	 <textarea class="form-control" rows="5" id="comment" style="width:500px" ng-model="commentSection"></textarea>
-  	 <input type="button" value="Submit" class="btn btn-primary" style="margin-top: 5px;" ng-click="submitScraperFeedback(false,true,comment_section); show=false">
+  	 <input type="button" value="Submit" class="btn btn-primary" style="margin-top: 5px;" ng-click="submitScraperFeedback(false,true,commentSection); show=false">
      </div>
      </div>
    </div>

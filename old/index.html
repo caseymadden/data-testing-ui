@@ -29,13 +29,14 @@
     	<h1>Strong beta data testing UI</h1>
     	<div id="table-div"><table class="table table-condensed table-bordered table-hover">
     		<thead>
-          <!-- COLUMNS -->
-          <tr><td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedColumn(v,$index))" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }}</td></tr>
+          <tr><td ng-repeat="(k,v) in json.columns"  ng-click="toggleShowModal(v.columnDef.label)" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }}</td></tr>
     		</thead>
     		<tbody>
-          <!-- ROWS -->
-    			<tr ng-repeat="row in json.rows track by $index" ng-click="selectedRow(row,$index)" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
-    				<td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedCell(row.rowData[v.columnDef.id].value,$index))" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
+    			<tr ng-repeat="row in json.rows" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
+            <!-- row.rowData = rowData object, gives access to rank, URL, metric1 -->
+            <!-- k = array index of json.columns array -->
+            <!-- v = columnDef object-->
+    				<td ng-repeat="(k,v) in json.columns" ng-click="toggleShowModal(row.rowData[v.columnDef.id].value)" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
     			</tr>
     		</tbody>
     	</table></div>
@@ -43,14 +44,22 @@
       <view-modal title="Feedback" visible="showModal">
         <form role="form">
           <div class="form-group">
+            <span>You clicked : {{ returnClickedValue }}</span><br></br>
             <label for="comment">Note : </label>
             <textarea class="form-control custom-control" rows="3" style="resize:none" ng-model="note"></textarea>
-            <span class="input-group-addon btn btn-success" ng-click="getInput(typeValue,ColumnIndex,rowIndex,true,false,note)">Looks good</span>
-            <span class="input-group-addon btn btn-danger" ng-click="getInput(typeValue,ColumnIndex,rowIndex,false,true,note)">Looks bad</span>
+            <span class="input-group-addon btn btn-success" ng-click="submitFeedback(returnClickedValue,true,false,note)">Looks good</span>
+            <span class="input-group-addon btn btn-danger" ngRequired="" ng-click="submitFeedback(returnClickedValue,false,true,note)">Looks bad</span>
           </div>
         </form>
       </view-modal>
+
+      Feedback Value : {{ feedbackValue }}<br>
+      Feedback Approved : {{ feedbackApproved }}<br>
+      Feedback Issue : {{ feedbackIssue }}<br>
+      Feedback Note : {{ feedbackNote }}<br>
+
     </div>
 
 </body>
 </html>
+

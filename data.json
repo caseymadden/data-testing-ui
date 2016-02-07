@@ -12,7 +12,7 @@
                 "label": "Rank"
             },
             "testingStatus": {
-                "approved": true,
+                "approved": false,
                 "issue": false,
                 "notes": "these are <b>notes</b>"
             }
@@ -47,7 +47,7 @@
                     "value": 1,
                     "testingStatus": {
                         "approved": false,
-                        "issue": true,
+                        "issue": false,
                         "notes": "these are <b>notes</b>"
                     }
                 },

@@ -11,12 +11,16 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="table.js"></script>
   <style>
-  /* You can remove this. It's just to make it look interactive */
+  
   #table-div{
     max-height:500px;
     max-width:auto;
     overflow-x:scroll;
     overflow-y:scroll;
+  }
+  #table-header-div{
+    max-width: 1123px;
+    margin-bottom:-20px;
   }
   table{
     cursor:pointer;
@@ -26,17 +30,19 @@
 <body>
 
     <div class="container" ng-controller="appCtrl">
-    	<h1>Strong beta data testing UI</h1>
-    	<div id="table-div"><table class="table table-condensed table-bordered table-hover">
-    		<thead>
-          <tr><td ng-repeat="(k,v) in json.columns"  ng-click="toggleShowModal(v.columnDef.label)" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }}</td></tr>
-    		</thead>
+    	<h1>{{ json.keyword }}</h1>
+    	<div id="table-header-div"><table class="table table-condensed table-bordered table-hover">
     		<tbody>
-    			<tr ng-repeat="row in json.rows" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
-            <!-- row.rowData = rowData object, gives access to rank, URL, metric1 -->
-            <!-- k = array index of json.columns array -->
-            <!-- v = columnDef object-->
-    				<td ng-repeat="(k,v) in json.columns" ng-click="toggleShowModal(row.rowData[v.columnDef.id].value)" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
+          <!-- COLUMNS -->
+          <tr><td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedColumn(v,$index))" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }}</td></tr>
+    		</tbody>
+        </table></div>
+        <div id="table-div"><table id="tableBody" class="table table-condensed table-bordered table-hover">
+    		<tbody>
+          <!-- ROWS -->
+          
+    			<tr ng-repeat="row in json.rows track by $index" ng-click="selectedRow(row,$index)" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
+    				<td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedCell(row.rowData[v.columnDef.id].value,$index))" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
     			</tr>
     		</tbody>
     	</table></div>
@@ -44,22 +50,13 @@
       <view-modal title="Feedback" visible="showModal">
         <form role="form">
           <div class="form-group">
-            <span>You clicked : {{ returnClickedValue }}</span><br></br>
             <label for="comment">Note : </label>
             <textarea class="form-control custom-control" rows="3" style="resize:none" ng-model="note"></textarea>
-            <span class="input-group-addon btn btn-success" ng-click="submitFeedback(returnClickedValue,true,false,note)">Looks good</span>
-            <span class="input-group-addon btn btn-danger" ngRequired="" ng-click="submitFeedback(returnClickedValue,false,true,note)">Looks bad</span>
+            <span class="input-group-addon btn btn-success" ng-click="getInput(typeValue,ColumnIndex,rowIndex,true,false,note)">Looks good</span>
+            <span class="input-group-addon btn btn-danger" ng-click="getInput(typeValue,ColumnIndex,rowIndex,false,true,note)">Looks bad</span>
           </div>
         </form>
       </view-modal>
-
-      Feedback Value : {{ feedbackValue }}<br>
-      Feedback Approved : {{ feedbackApproved }}<br>
-      Feedback Issue : {{ feedbackIssue }}<br>
-      Feedback Note : {{ feedbackNote }}<br>
-
     </div>
-
 </body>
 </html>
-

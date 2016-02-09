@@ -6,6 +6,7 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
 
   jsonData.getTableData().then(function(TableData){
     $scope.json = TableData;
+
   })
 
   $scope.animationsEnabled = true;
@@ -22,12 +23,6 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
       animation: $scope.animationsEnabled,
       templateUrl: 'modal.html',
       controller: 'ModalInstanceCtrl',
-      // typeValue: typeValue,
-      // colIndex: colIndex,
-      // rowIndex: rowIndex,
-      // approve: approve,
-      // issue: issue,
-      // note: note,
       resolve: {
         typeValue: function() {
           return typeValue;
@@ -51,16 +46,28 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
     });
 
     modalInstance.result.then(function (response) {
-      console.log(response);
-      console.log("Passing Data into getInputReturn");
+       
       jsonData.getInputReturn(
         response['typeValue'],
         response['colIndex'],
         response['rowIndex'],
         response['approve'],
         response['issue'],
-        response['note']
-      );
+        response['note']);
+
+      if(response['typeValue'] == 'cell' || response['typeValue'] == 'row') {
+        var id = $scope.json.columns[response['colIndex']].columnDef.id;
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.approved=response['approve'];
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.issue=response['issue'];
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.notes=response['note'];
+      } else
+      if(response['typeValue'] == 'column'){
+        $scope.json.columns[response['colIndex']].testingStatus.approved = response['approve'];
+        $scope.json.columns[response['colIndex']].testingStatus.issue = response['issue'];
+        $scope.json.columns[response['colIndex']].testingStatus.notes=response['note'];
+      }
+
+      console.log("Passing Data into getInputReturn");
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -138,7 +145,7 @@ appname.service('jsonData', function($http) {
       console.log("=======================================")
       console.log("");
     }).then(function(response){
-      // Output info via console. Can't test POST.
+  //     // Output info via console. Can't test POST.
       console.log("");
       console.log("=======================================")
       console.log("Printing out POST data!");

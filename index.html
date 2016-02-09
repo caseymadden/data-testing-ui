@@ -13,13 +13,18 @@
   <style>
 
   table{
-    cursor:pointer;
     table-layout:fixed;
+  }
+  .tables_not_keyword{
+    cursor:pointer;
   }
   #table_div{
     max-height:500px;
     overflow-x:scroll;
     overflow-y:scroll;
+  }
+  #header_div{
+    max-width:1123px;
   }
 
   </style>
@@ -27,9 +32,18 @@
 <body>
 
   <div class="container" ng-controller="appCtrl">
-    <h1>{{ json.keyword }}</h1>
+  <div id="header_div">
+   <table class="table table-bordered" style="margin-top: 30px; margin-bottom:0px">
+    <body>
+       <tr>
+        <td>
+         <h1>{{ json.keyword }}</h1>
+        </td>
+       </tr>
+      </body>
+    </table>
     <div id="table_div">
-      <table class="table table-condensed table-bordered table-hover">
+      <table class="table table-condensed table-bordered table-hover tables_not_keyword" style="margin-bottom: 0px">
       	<tbody>
           <!-- COLUMNS -->
           <tr>
@@ -40,18 +54,25 @@
                   {{ v.columnDef.label }}
             </td>
           </tr>
+          </tbody>
+        </table>
+        
+        <table class="table table-condensed table-bordered table-hover tables_not_keyword" style="margin-top:0px">
+         <tbody>
           <!-- ROWS -->
       		<tr ng-repeat="(rowIndex, row) in json.rows track by $index"
               ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
       			<td
               ng-repeat="(k,v) in json.columns track by $index"
               ng-click="open('cell', k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)"
-              ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">
+              ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} "
+              ng-style="{width: v.columnDef.width}">
               {{ row.rowData[v.columnDef.id].value }}
             </td>
       		</tr>
       	</tbody>
       </table>
+      </div>
     </div>
   </div>
 

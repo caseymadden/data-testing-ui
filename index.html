@@ -12,18 +12,14 @@
   <script src="table.js"></script>
   <style>
 
-  #table-div{
-    max-height:500px;
-    max-width:auto;
-    overflow-x:scroll;
-    overflow-y:scroll;
-  }
-  #table-header-div{
-    max-width: 1123px;
-    margin-bottom:-20px;
-  }
   table{
     cursor:pointer;
+    table-layout:fixed;
+  }
+  #table_div{
+    max-height:500px;
+    overflow-x:scroll;
+    overflow-y:scroll;
   }
 
   </style>
@@ -32,24 +28,18 @@
 
   <div class="container" ng-controller="appCtrl">
     <h1>{{ json.keyword }}</h1>
-    <div id="table-header-div">
+    <div id="table_div">
       <table class="table table-condensed table-bordered table-hover">
       	<tbody>
           <!-- COLUMNS -->
           <tr>
             <td ng-repeat="(k,v) in json.columns track by $index"
                   ng-click="open('column', k, rowIndex, v.testingStatus.approved, v.testingStatus.issue, v.testingStatus.notes)"
-                  ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">
+                  ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }"
+                  ng-style="{width: v.columnDef.width}">
                   {{ v.columnDef.label }}
             </td>
           </tr>
-      	</tbody>
-      </table>
-    </div>
-
-    <div id="table-div">
-      <table id="tableBody" class="table table-condensed table-bordered table-hover">
-    		<tbody>
           <!-- ROWS -->
       		<tr ng-repeat="(rowIndex, row) in json.rows track by $index"
               ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">

@@ -12,6 +12,12 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
 
   $scope.open = function (typeValue,colIndex,rowIndex,approve,issue,note) {
 
+    if (typeValue == "cell"){
+      if (colIndex == 0){
+        typeValue = "row"
+      }
+    }
+
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'modal.html',
@@ -46,7 +52,14 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
 
     modalInstance.result.then(function (response) {
       console.log("Passing Data into getInputReturn");
-      jsonData.getInputReturn(typeValue,colIndex,rowIndex,approve,issue,note)
+      jsonData.getInputReturn(
+        response['typeValue'],
+        response['colIndex'],
+        response['rowIndex'],
+        response['approve'],
+        response['issue'],
+        response['note']
+      );
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -97,8 +110,17 @@ appname.service('jsonData', function($http) {
         method: 'POST',
         url: returnPath,
         data: inputData
-    }).then(function(){
+    }).success(function(data){
+      console.log("");
+      console.log("=======================================")
+      console.log("From Post JSON file");
+      console.log("Message : " + data["message"]);
+      console.log("=======================================")
+      console.log("");
+    }).then(function(response){
       // Output info via console. Can't test POST.
+      console.log("");
+      console.log("=======================================")
       console.log("Printing out POST data!");
       console.log("---------------------------------------")
       console.log("Input Type : " + inputData['type']);
@@ -107,7 +129,8 @@ appname.service('jsonData', function($http) {
       console.log("Approved Status : " + inputData['approved']);
       console.log("Issue Status : " + inputData['issue']);
       console.log("Notes : " + inputData['notes']);
-      console.log("---------------------------------------")
+      console.log("=======================================")
+      console.log("");
     });
   };
 

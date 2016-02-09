@@ -52,7 +52,6 @@
     		<tbody>
           <!-- ROWS -->
       		<tr ng-repeat="(rowIndex, row) in json.rows track by $index"
-              ng-click="open('row',colIndex,rowIndex,row.testingStatus.approved,row.testingStatus.issue,row.testingStatus.notes)"
               ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
       			<td
               ng-repeat="(k,v) in json.columns track by $index"

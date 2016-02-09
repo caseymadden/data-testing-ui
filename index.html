@@ -41,22 +41,46 @@
     		<tbody>
           <!-- ROWS -->
           
-    			<tr ng-repeat="row in json.rows track by $index" ng-click="selectedRow(row,$index)" ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
-    				<td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedCell(row.rowData[v.columnDef.id].value,$index))" ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">{{ row.rowData[v.columnDef.id].value }}</td>
+    			<tr ng-repeat="(rowIndex, row) in json.rows track by $index" 
+          ng-click="selectedRow(row,$index)" 
+          ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
+    				<td 
+              ng-repeat="(k,v) in json.columns track by $index" 
+              ng-click="open('cell', k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)" 
+              ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">
+              {{ row.rowData[v.columnDef.id].value }}
+            </td>
     			</tr>
     		</tbody>
     	</table></div>
 
-      <view-modal title="Feedback" visible="showModal">
+     <script type="text/ng-template" id="myModalContent.html">
+    <!--    <div class="modal-header">
+            <h3 class="modal-title">Im a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div> -->
+          <view-modal title="Feedback" visible="showModal">
         <form role="form">
           <div class="form-group">
             <label for="comment">Note : </label>
             <textarea class="form-control custom-control" rows="3" style="resize:none" ng-model="note"></textarea>
-            <span class="input-group-addon btn btn-success" ng-click="getInput(typeValue,ColumnIndex,rowIndex,true,false,note)">Looks good</span>
-            <span class="input-group-addon btn btn-danger" ng-click="getInput(typeValue,ColumnIndex,rowIndex,false,true,note)">Looks bad</span>
+            <span class="input-group-addon btn btn-success" ng-click="approve=true; ok()">Looks good</span>
+            <span class="input-group-addon btn btn-danger" ng-click="issue=true; ok()">Looks bad</span>
           </div>
         </form>
       </view-modal>
-    </div>
+    </script>
+</div>
 </body>
 </html>

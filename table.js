@@ -1,7 +1,7 @@
-var appname = angular.module('appname', []);
+var appname = angular.module('appname', ["ui.bootstrap"]);
 var path = 'data.json';
 var returnPath = 'return_data.json'
-appname.controller('appCtrl',function ($scope,$http,jsonData){
+appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
   $scope.showModal = false;
   $scope.selectedColumn = function(selectedColumnName,selectedColumnIndex){
     $scope.typeValue = "column";
@@ -24,14 +24,14 @@ appname.controller('appCtrl',function ($scope,$http,jsonData){
     $scope.rowIndex = selectedRowIndex;
   };
 
-  $scope.selectedCell = function(selectedCellName,selectedCellIndex){
+  $scope.selectedCell = function(selectedCellIndex){
     $scope.typeValue = "cell";
     $scope.ColumnIndex = selectedCellIndex;
   };
 
   $scope.toggleShowModal = function(input){
     $scope.showModal = !$scope.showModal;
-    $scope.returnClickedValue = input;
+    //$scope.returnClickedValue = input;
   };
 
   jsonData.getTableData().then(function(TableData){
@@ -43,6 +43,48 @@ appname.controller('appCtrl',function ($scope,$http,jsonData){
       this.note = null;
       jsonData.getInputReturn(typeValue,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue)
   };
+   $scope.animationsEnabled = true;
+
+  $scope.open = function (typeValue,colIndex,rowIndex,approve,issue,note) {
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      typeValue: typeValue,
+      colIndex: colIndex,
+      rowIndex: rowIndex,
+      approve: approve,
+      issue: issue,
+      note: note,
+      resolve: {
+        typeValue: function () {
+          return typeValue;
+        },
+        colIndex: function () {
+          return colIndex;
+        },
+        rowIndex: function () {
+          return rowIndex;
+        },
+        approve: function () {
+          return approve;
+        },
+        issue: function () {
+          return issue;
+        },
+        note: function () {
+          return note;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (response) {
+      console.log(response);
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  }
 });
 
 appname.service('jsonData', function($http) {
@@ -106,31 +148,20 @@ appname.service('jsonData', function($http) {
 
 });
 
-  appname.directive('viewModal', function () {
-    return {
-      templateUrl: 'modal.html',
-      restrict: 'E',
-      transclude: true,
-      replace:true,
-      scope:true,
-      link: function viewDetails(scope, element, attrs) {
-        scope.title = attrs.title;
-        scope.$watch(attrs.visible, function(value){
-          if(value == true)
-            $(element).modal('show');
-          else
-            $(element).modal('hide');
-        });
-        $(element).on('shown.bs.modal', function(){
-          scope.$apply(function(){
-            scope.$parent[attrs.visible] = true;
-          });
-        });
-        $(element).on('hidden.bs.modal', function(){
-          scope.$apply(function(){
-            scope.$parent[attrs.visible] = false;
-          });
-        });
-      }
-    };
-  });
+appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, colIndex, rowIndex, approve, issue, note) {
+
+  $scope.typeValue = typeValue;
+  $scope.colIndex = colIndex;
+  $scope.rowIndex = rowIndex;
+  $scope.approve = approve;
+  $scope.issue = issue;
+  $scope.note = note;
+
+  $scope.ok = function () {
+    $uibModalInstance.close({"typeValue" : typeValue, "colIndex" : colIndex, "rowIndex" : rowIndex, "approve" : approve, "issue" : issue, "note" : note});
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});

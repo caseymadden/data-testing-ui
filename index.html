@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="table.js"></script>
   <style>
-  
+
   #table-div{
     max-height:500px;
     max-width:auto;
@@ -25,62 +25,46 @@
   table{
     cursor:pointer;
   }
+
   </style>
 </head>
 <body>
 
-    <div class="container" ng-controller="appCtrl">
-    	<h1>{{ json.keyword }}</h1>
-    	<div id="table-header-div"><table class="table table-condensed table-bordered table-hover">
-    		<tbody>
+  <div class="container" ng-controller="appCtrl">
+    <h1>{{ json.keyword }}</h1>
+    <div id="table-header-div">
+      <table class="table table-condensed table-bordered table-hover">
+      	<tbody>
           <!-- COLUMNS -->
-          <tr><td ng-repeat="(k,v) in json.columns track by $index" ng-click="toggleShowModal(selectedColumn(v,$index))" ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">{{ v.columnDef.label }}</td></tr>
-    		</tbody>
-        </table></div>
-        <div id="table-div"><table id="tableBody" class="table table-condensed table-bordered table-hover">
+          <tr>
+            <td ng-repeat="(k,v) in json.columns track by $index"
+                  ng-click="open('column', k, rowIndex, v.testingStatus.approved, v.testingStatus.issue, v.testingStatus.notes)"
+                  ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }">
+                  {{ v.columnDef.label }}
+            </td>
+          </tr>
+      	</tbody>
+      </table>
+    </div>
+
+    <div id="table-div">
+      <table id="tableBody" class="table table-condensed table-bordered table-hover">
     		<tbody>
           <!-- ROWS -->
-          
-    			<tr ng-repeat="(rowIndex, row) in json.rows track by $index" 
-          ng-click="selectedRow(row,$index)" 
-          ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
-    				<td 
-              ng-repeat="(k,v) in json.columns track by $index" 
-              ng-click="open('cell', k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)" 
+      		<tr ng-repeat="(rowIndex, row) in json.rows track by $index"
+              ng-click="open('row',colIndex,rowIndex,row.testingStatus.approved,row.testingStatus.issue,row.testingStatus.notes)"
+              ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
+      			<td
+              ng-repeat="(k,v) in json.columns track by $index"
+              ng-click="open('cell', k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)"
               ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} ">
               {{ row.rowData[v.columnDef.id].value }}
             </td>
-    			</tr>
-    		</tbody>
-    	</table></div>
+      		</tr>
+      	</tbody>
+      </table>
+    </div>
+  </div>
 
-     <script type="text/ng-template" id="myModalContent.html">
-    <!--    <div class="modal-header">
-            <h3 class="modal-title">Im a modal!</h3>
-        </div>
-        <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in items">
-                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div> -->
-          <view-modal title="Feedback" visible="showModal">
-        <form role="form">
-          <div class="form-group">
-            <label for="comment">Note : </label>
-            <textarea class="form-control custom-control" rows="3" style="resize:none" ng-model="note"></textarea>
-            <span class="input-group-addon btn btn-success" ng-click="approve=true; ok()">Looks good</span>
-            <span class="input-group-addon btn btn-danger" ng-click="issue=true; ok()">Looks bad</span>
-          </div>
-        </form>
-      </view-modal>
-    </script>
-</div>
 </body>
 </html>

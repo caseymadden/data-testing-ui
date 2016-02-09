@@ -1,55 +1,20 @@
 var appname = angular.module('appname', ["ui.bootstrap"]);
 var path = 'data.json';
 var returnPath = 'return_data.json'
+
 appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
-  $scope.showModal = false;
-  $scope.selectedColumn = function(selectedColumnName,selectedColumnIndex){
-    $scope.typeValue = "column";
-    // reset rowIndex when clicking the columns(only do it for this)
-    $scope.rowIndex = ""
-    $scope.ColumnIndex = selectedColumnIndex;
-  };
-
-  $scope.selectedRow = function(selectedRowName,selectedRowIndex){
-    // As far as I am aware there is no way to select a row, only cells and columns.
-    // When we have a "Select Row" button or whatever, use this?
-    /*
-    if($scope.ColumnIndex == 0){
-      $scope.selectedType = "row";
-    }else{
-      $scope.selectedType = "cell";
-    }
-    $scope.rowIndex = selectedRowIndex;
-    */
-    $scope.rowIndex = selectedRowIndex;
-  };
-
-  $scope.selectedCell = function(selectedCellIndex){
-    $scope.typeValue = "cell";
-    $scope.ColumnIndex = selectedCellIndex;
-  };
-
-  $scope.toggleShowModal = function(input){
-    $scope.showModal = !$scope.showModal;
-    //$scope.returnClickedValue = input;
-  };
 
   jsonData.getTableData().then(function(TableData){
     $scope.json = TableData;
   })
 
-  $scope.getInput = function(typeValue,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
-      $scope.showModal = !$scope.showModal;
-      this.note = null;
-      jsonData.getInputReturn(typeValue,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue)
-  };
-   $scope.animationsEnabled = true;
+  $scope.animationsEnabled = true;
 
   $scope.open = function (typeValue,colIndex,rowIndex,approve,issue,note) {
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'myModalContent.html',
+      templateUrl: 'modal.html',
       controller: 'ModalInstanceCtrl',
       typeValue: typeValue,
       colIndex: colIndex,
@@ -80,7 +45,8 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
     });
 
     modalInstance.result.then(function (response) {
-      console.log(response);
+      console.log("Passing Data into getInputReturn");
+      jsonData.getInputReturn(typeValue,colIndex,rowIndex,approve,issue,note)
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -88,7 +54,8 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
 });
 
 appname.service('jsonData', function($http) {
-  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
+
+  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
   this.getTableData = function() {
   	return $http({
@@ -108,7 +75,6 @@ appname.service('jsonData', function($http) {
             "notes":notesValue
           }
         }
-        /*
         if (typeValue == "row"){
           var inputData = {
             "type":typeValue,
@@ -118,7 +84,6 @@ appname.service('jsonData', function($http) {
             "notes":notesValue
           }
         }
-        */
         if (typeValue == "column"){
           var inputData = {
             "type":typeValue,
@@ -131,10 +96,10 @@ appname.service('jsonData', function($http) {
     return $http({
         method: 'POST',
         url: returnPath,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: inputData
     }).then(function(){
       // Output info via console. Can't test POST.
+      console.log("Printing out POST data!");
       console.log("---------------------------------------")
       console.log("Input Type : " + inputData['type']);
       console.log("Column Index : " + inputData['colIndex']);

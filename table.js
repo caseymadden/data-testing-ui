@@ -22,35 +22,36 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
       animation: $scope.animationsEnabled,
       templateUrl: 'modal.html',
       controller: 'ModalInstanceCtrl',
-      typeValue: typeValue,
-      colIndex: colIndex,
-      rowIndex: rowIndex,
-      approve: approve,
-      issue: issue,
-      note: note,
+      // typeValue: typeValue,
+      // colIndex: colIndex,
+      // rowIndex: rowIndex,
+      // approve: approve,
+      // issue: issue,
+      // note: note,
       resolve: {
-        typeValue: function () {
+        typeValue: function() {
           return typeValue;
         },
-        colIndex: function () {
+        colIndex: function() {
           return colIndex;
         },
-        rowIndex: function () {
+        rowIndex: function() {
           return rowIndex;
         },
-        approve: function () {
+        approve: function() {
           return approve;
         },
-        issue: function () {
+        issue: function() {
           return issue;
         },
-        note: function () {
+        note: function() {
           return note;
         }
       }
     });
 
     modalInstance.result.then(function (response) {
+      console.log(response);
       console.log("Passing Data into getInputReturn");
       jsonData.getInputReturn(
         response['typeValue'],
@@ -65,6 +66,25 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
     });
   }
 });
+
+appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, colIndex, rowIndex, approve, issue, note) {
+
+  $scope.typeValue = typeValue;
+  $scope.colIndex = colIndex;
+  $scope.rowIndex = rowIndex;
+  $scope.approve = approve;
+  $scope.issue = issue;
+  $scope.note = note;
+
+  $scope.ok = function () {
+   $uibModalInstance.close({"typeValue" : $scope.typeValue, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
 
 appname.service('jsonData', function($http) {
 
@@ -134,22 +154,4 @@ appname.service('jsonData', function($http) {
     });
   };
 
-});
-
-appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, colIndex, rowIndex, approve, issue, note) {
-
-  $scope.typeValue = typeValue;
-  $scope.colIndex = colIndex;
-  $scope.rowIndex = rowIndex;
-  $scope.approve = approve;
-  $scope.issue = issue;
-  $scope.note = note;
-
-  $scope.ok = function () {
-    $uibModalInstance.close({"typeValue" : typeValue, "colIndex" : colIndex, "rowIndex" : rowIndex, "approve" : approve, "issue" : issue, "note" : note});
-  };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
 });

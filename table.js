@@ -1,17 +1,29 @@
-var appname = angular.module('appname', ["ui.bootstrap"]);
-var path = 'data.json';
-var returnPath = 'return_data.json'
+var appname = angular.module('appname', ["ui.bootstrap","ngRoute"]);
+var path = ''
+var returnPath = 'return_data.json';
+var markFinishedEndpoint = '';
 
-appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
-
-  jsonData.getTableData().then(function(TableData){
-    $scope.json = TableData;
-
+appname.config(function ($routeProvider){
+  $routeProvider.when('/:keywordSearch', {
+    controller: 'appCtrl',
+    templateUrl: 'table.html'
   })
+});
+
+appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $routeParams){
+
+  // Just to shut up the console about params being undefined, also dont run when empty.
+  if ($routeParams.keywordSearch != null){
+    jsonData.getTableData($routeParams.keywordSearch).then(function(TableData){
+      $scope.json = TableData;
+    })
+  }else{
+    // do nothing
+  }
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function (typeValue,colIndex,rowIndex,approve,issue,note) {
+  $scope.open = function(typeValue,colIndex,rowIndex,approve,issue,note) {
 
     if (typeValue == "cell"){
       if (colIndex == 0){
@@ -46,7 +58,7 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log){
     });
 
     modalInstance.result.then(function (response) {
-       
+
       jsonData.getInputReturn(
         response['typeValue'],
         response['colIndex'],
@@ -92,16 +104,17 @@ appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typ
   };
 });
 
-
-appname.service('jsonData', function($http) {
+appname.service('jsonData', function($http,$routeParams) {
 
   $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-  this.getTableData = function() {
+  this.getTableData = function(keyword) {
   	return $http({
-  		url: path,
-  		method: 'GET',
-  	}).then(function(returnTableData){return returnTableData.data});
+  		url: path + keyword + '.json',
+  		method: 'GET'
+  	}).then(function(returnTableData){
+      return returnTableData.data
+    });
   };
 
   this.getInputReturn = function(typeValue,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
@@ -160,5 +173,15 @@ appname.service('jsonData', function($http) {
       console.log("");
     });
   };
+
+  /*
+  this.markFinished = function(keyword){
+    return $http({
+      method: 'POST',
+      url: markFinishedEndpoint,
+      data: keyword
+    })
+  }
+  */
 
 });

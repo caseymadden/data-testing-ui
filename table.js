@@ -1,6 +1,6 @@
 var appname = angular.module('appname', ["ui.bootstrap","ngRoute"]);
 var path = ''
-var returnPath = 'return_data.json';
+var returnPath = '';
 var markFinishedEndpoint = '';
 
 appname.config(function ($routeProvider){
@@ -12,13 +12,21 @@ appname.config(function ($routeProvider){
 
 appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $routeParams){
 
+  $('#table_div').on('scroll',function() {
+    $('#header_div').scrollLeft($(this).scrollLeft());
+  });
+
   // Just to shut up the console about params being undefined, also dont run when empty.
   if ($routeParams.keywordSearch != null){
     jsonData.getTableData($routeParams.keywordSearch).then(function(TableData){
       $scope.json = TableData;
     })
-  }else{
-    // do nothing
+  }
+
+  $scope.markFinished = function(keyword){
+    if (keyword != null){
+      jsonData.markFinished(keyword);
+    }
   }
 
   $scope.animationsEnabled = true;
@@ -110,7 +118,9 @@ appname.service('jsonData', function($http,$routeParams) {
 
   this.getTableData = function(keyword) {
   	return $http({
-  		url: path + keyword + '.json',
+  		url: path,
+      withCredentials: true,
+      params: {"keyword":keyword},
   		method: 'GET'
   	}).then(function(returnTableData){
       return returnTableData.data
@@ -158,7 +168,7 @@ appname.service('jsonData', function($http,$routeParams) {
       console.log("=======================================")
       console.log("");
     }).then(function(response){
-  //     // Output info via console. Can't test POST.
+  // Output info via console. Can't test POST.
       console.log("");
       console.log("=======================================")
       console.log("Printing out POST data!");
@@ -174,14 +184,15 @@ appname.service('jsonData', function($http,$routeParams) {
     });
   };
 
-  /*
   this.markFinished = function(keyword){
     return $http({
       method: 'POST',
       url: markFinishedEndpoint,
       data: keyword
+    }).then(function(finishedResponse){
+      console.log("Keyword Input : " + finishedResponse.config.data);
+      console.log("Response from Server : " + finishedResponse.data.message);
     })
   }
-  */
 
 });

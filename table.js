@@ -12,6 +12,10 @@ appname.config(function ($routeProvider){
 
 appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $routeParams){
 
+  $('#table_div').on('scroll',function() {
+    $('#header_div').scrollLeft($(this).scrollLeft());
+  });
+
   // Just to shut up the console about params being undefined, also dont run when empty.
   if ($routeParams.keywordSearch != null){
     jsonData.getTableData($routeParams.keywordSearch).then(function(TableData){

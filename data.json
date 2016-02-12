@@ -9,8 +9,7 @@
         {
             "columnDef": {
                 "id": "rank",
-                "label": "Rank",
-                "width": "50px"
+                "label": "Rank"
             },
             "testingStatus": {
                 "approved": false,
@@ -21,8 +20,7 @@
         {
             "columnDef": {
                 "id": "url",
-                "label": "Url",
-                "width": "200px"
+                "label": "Url"
             },
             "testingStatus": {
                 "approved": false,
@@ -33,176 +31,7 @@
         {
             "columnDef": {
                 "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
-            },
-            "testingStatus": {
-                "approved": false,
-                "issue": false,
-                "notes": "these are <b>notes</b>"
-            }
-        },
-        {
-            "columnDef": {
-                "id": "metric1",
-                "label": "Metric 1",
-                "width": "100px"
+                "label": "Metric 1"
             },
             "testingStatus": {
                 "approved": false,

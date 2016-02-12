@@ -34,7 +34,7 @@
       <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-3">
         <input class="form-control" placeholder="Enter Keyword..." ng-model="keywordSearch"></input>
         <a href="#{{keywordSearch}}"><button class="btn btn-primary">Search</button></a>
-        <a href="/"><button class="btn btn-success" ng-click="markFinished()">Finished</button></a>
+        <a href="/"><button class="btn btn-success" ng-click="markFinished(keywordSearch)">Finished</button></a>
       </div>
 
     <div ng-view>

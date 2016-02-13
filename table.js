@@ -140,6 +140,7 @@ appname.service('jsonData', function($http,$routeParams) {
     return $http({
         method: 'POST',
         url: returnPath,
+        withCredentials: true,
         params:{
           "keyword":keyword,
           "type":typeValue,

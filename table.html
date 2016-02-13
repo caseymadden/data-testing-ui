@@ -14,7 +14,7 @@
         <!-- COLUMNS -->
         <tr>
           <td ng-repeat="(k,v) in json.columns track by $index"
-              ng-click="open('column', k, rowIndex, v.testingStatus.approved, v.testingStatus.issue, v.testingStatus.notes)"
+              ng-click="open('column',json.keyword,v.columnDef.id, k, rowIndex, v.testingStatus.approved, v.testingStatus.issue, v.testingStatus.notes)"
               ng-class="{ success : v.testingStatus.approved, danger : v.testingStatus.issue }"
               ng-style="{width: v.columnDef.width}">
               {{ v.columnDef.label }}
@@ -31,7 +31,7 @@
             ng-class="{ success : row.rowData.rank.testingStatus.approved, danger : row.rowData.rank.testingStatus.issue }">
           <td
             ng-repeat="(k,v) in json.columns track by $index"
-            ng-click="open('cell',v.columnDef.id, k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)"
+            ng-click="open('cell',json.keyword,v.columnDef.id, k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)"
             ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} "
             ng-style="{width: v.columnDef.width}">
             {{ row.rowData[v.columnDef.id].value }}

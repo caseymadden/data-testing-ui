@@ -30,7 +30,7 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function($routeParams.keywordSearch,typeValue,colIndex,rowIndex,approve,issue,note) {
+  $scope.open = function(typeValue,keyword,columnID,colIndex,rowIndex,approve,issue,note) {
 
     if (typeValue == "cell"){
       if (colIndex == 0){
@@ -43,11 +43,11 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
       templateUrl: 'modal.html',
       controller: 'ModalInstanceCtrl',
       resolve: {
-        keyword: function() {
-          return keyword;
-        },
         typeValue: function() {
           return typeValue;
+        },
+        keyword: function() {
+          return $routeParams.keywordSearch;
         },
         columnID: function() {
           return columnID;
@@ -73,8 +73,8 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
     modalInstance.result.then(function (response) {
 
       jsonData.getInputReturn(
-        response['keyword'],
         response['typeValue'],
+        response['keyword'],
         response['columnID'],
         response['colIndex'],
         response['rowIndex'],
@@ -101,10 +101,10 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
   }
 });
 
-appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, keyword, typeValue, columnID, colIndex, rowIndex, approve, issue, note) {
+appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, keyword, columnID, colIndex, rowIndex, approve, issue, note) {
 
-  $scope.keyword = keyword;
   $scope.typeValue = typeValue;
+  $scope.keyword = keyword;
   $scope.columnID = columnID
   $scope.colIndex = colIndex;
   $scope.rowIndex = rowIndex;
@@ -113,7 +113,7 @@ appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, key
   $scope.note = note;
 
   $scope.ok = function () {
-    $uibModalInstance.close({"keyword" : $scope.keyword,"typeValue" : $scope.typeValue, "columnID" : $scope.columnID, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
+    $uibModalInstance.close({"typeValue" : $scope.typeValue, "keyword" : $scope.keyword, "columnID" : $scope.columnID, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
   };
 
   $scope.cancel = function () {
@@ -142,8 +142,8 @@ appname.service('jsonData', function($http,$routeParams) {
         url: returnPath,
         withCredentials: true,
         params:{
-          "keyword":keyword,
           "type":typeValue,
+          "keyword":keyword,
           "field":columnID,
           "colIndex":colIndexValue,
           "rowIndex":rowIndexValue,

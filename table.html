@@ -34,7 +34,12 @@
             ng-click="open('cell',json.keyword,v.columnDef.id, k, rowIndex, row.rowData[v.columnDef.id].testingStatus.approved, row.rowData[v.columnDef.id].testingStatus.issue, row.rowData[v.columnDef.id].testingStatus.notes)"
             ng-class="{success : ((row.rowData[v.columnDef.id].testingStatus.approved || json.columns[k].testingStatus.approved) && !row.rowData[v.columnDef.id].testingStatus.issue), danger : ((row.rowData[v.columnDef.id].testingStatus.issue || json.columns[k].testingStatus.issue) && !row.rowData[v.columnDef.id].testingStatus.approved)} "
             ng-style="{width: v.columnDef.width}">
-            {{ row.rowData[v.columnDef.id].value }}
+            <a ng-if="v.columnDef.id == 'url';" href="{{row.rowData[v.columnDef.id].value}}" target="_blank">
+              {{ row.rowData[v.columnDef.id].value }}
+            </a>
+            <span ng-if="v.columnDef.id != 'url';">
+              {{ row.rowData[v.columnDef.id].value }}
+            </span>
           </td>
         </tr>
       </tbody>

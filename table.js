@@ -1,6 +1,6 @@
 var appname = angular.module('appname', ["ui.bootstrap","ngRoute"]);
-var path = ''
-var returnPath = '';
+var path = 'http://hcdev9.jaymaul.com/+tls/service/testdata/getData'
+var returnPath = 'http://hcdev9.jaymaul.com/+tls/service/testdata/updateData';
 var markFinishedEndpoint = '';
 
 appname.config(function ($routeProvider){
@@ -16,7 +16,6 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
     $('#header_div').scrollLeft($(this).scrollLeft());
   });
 
-  // Just to shut up the console about params being undefined, also dont run when empty.
   if ($routeParams.keywordSearch != null){
     jsonData.getTableData($routeParams.keywordSearch).then(function(TableData){
       $scope.json = TableData;
@@ -31,7 +30,7 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function(typeValue,colIndex,rowIndex,approve,issue,note) {
+  $scope.open = function(typeValue,keyword,columnID,colIndex,rowIndex,approve,issue,note) {
 
     if (typeValue == "cell"){
       if (colIndex == 0){
@@ -46,6 +45,12 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
       resolve: {
         typeValue: function() {
           return typeValue;
+        },
+        keyword: function() {
+          return $routeParams.keywordSearch;
+        },
+        columnID: function() {
+          return columnID;
         },
         colIndex: function() {
           return colIndex;
@@ -69,22 +74,29 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
 
       jsonData.getInputReturn(
         response['typeValue'],
+        response['keyword'],
+        response['columnID'],
         response['colIndex'],
         response['rowIndex'],
         response['approve'],
         response['issue'],
         response['note']);
 
-      if(response['typeValue'] == 'cell' || response['typeValue'] == 'row') {
+      if(response['typeValue'] == 'cell'){
         var id = $scope.json.columns[response['colIndex']].columnDef.id;
-        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.approved=response['approve'];
-        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.issue=response['issue'];
-        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.notes=response['note'];
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.approved = response['approve'];
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.issue = response['issue'];
+        $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.notes = response['note'];
       } else
       if(response['typeValue'] == 'column'){
         $scope.json.columns[response['colIndex']].testingStatus.approved = response['approve'];
         $scope.json.columns[response['colIndex']].testingStatus.issue = response['issue'];
-        $scope.json.columns[response['colIndex']].testingStatus.notes=response['note'];
+        $scope.json.columns[response['colIndex']].testingStatus.notes = response['note'];
+      }else
+      if(response['typeValue'] == 'row'){
+        $scope.json.rows[response['rowIndex']].testingStatus.approved = response['approve'];
+        $scope.json.rows[response['rowIndex']].testingStatus.issue = response['issue'];
+        $scope.json.rows[response['rowIndex']].testingStatus.notes = response['note'];
       }
 
       console.log("Passing Data into getInputReturn");
@@ -94,9 +106,11 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
   }
 });
 
-appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, colIndex, rowIndex, approve, issue, note) {
+appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, keyword, columnID, colIndex, rowIndex, approve, issue, note) {
 
   $scope.typeValue = typeValue;
+  $scope.keyword = keyword;
+  $scope.columnID = columnID
   $scope.colIndex = colIndex;
   $scope.rowIndex = rowIndex;
   $scope.approve = approve;
@@ -104,7 +118,7 @@ appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typ
   $scope.note = note;
 
   $scope.ok = function () {
-   $uibModalInstance.close({"typeValue" : $scope.typeValue, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
+    $uibModalInstance.close({"typeValue" : $scope.typeValue, "keyword" : $scope.keyword, "columnID" : $scope.columnID, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
   };
 
   $scope.cancel = function () {
@@ -127,39 +141,21 @@ appname.service('jsonData', function($http,$routeParams) {
     });
   };
 
-  this.getInputReturn = function(typeValue,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
-        if (typeValue == "cell"){
-          var inputData = {
-            "type":typeValue,
-            "colIndex":colIndexValue,
-            "rowIndex":rowIndexValue,
-            "approved":approvedValue,
-            "issue":issueValue,
-            "notes":notesValue
-          }
-        }
-        if (typeValue == "row"){
-          var inputData = {
-            "type":typeValue,
-            "rowIndex":rowIndexValue,
-            "approved":approvedValue,
-            "issue":issueValue,
-            "notes":notesValue
-          }
-        }
-        if (typeValue == "column"){
-          var inputData = {
-            "type":typeValue,
-            "colIndex":colIndexValue,
-            "approved":approvedValue,
-            "issue":issueValue,
-            "notes":notesValue
-          }
-        }
+  this.getInputReturn = function(typeValue,keyword,columnID,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
     return $http({
         method: 'POST',
         url: returnPath,
-        data: inputData
+        withCredentials: true,
+        params:{
+          "type":typeValue,
+          "keyword":keyword,
+          "field":columnID,
+          "colIndex":colIndexValue,
+          "rowIndex":rowIndexValue,
+          "approved":approvedValue,
+          "issue":issueValue,
+          "notes":notesValue
+        }
     }).success(function(data){
       console.log("");
       console.log("=======================================")
@@ -168,19 +164,7 @@ appname.service('jsonData', function($http,$routeParams) {
       console.log("=======================================")
       console.log("");
     }).then(function(response){
-  // Output info via console. Can't test POST.
-      console.log("");
-      console.log("=======================================")
-      console.log("Printing out POST data!");
-      console.log("---------------------------------------")
-      console.log("Input Type : " + inputData['type']);
-      console.log("Column Index : " + inputData['colIndex']);
-      console.log("Row Index : " + inputData['rowIndex']);
-      console.log("Approved Status : " + inputData['approved']);
-      console.log("Issue Status : " + inputData['issue']);
-      console.log("Notes : " + inputData['notes']);
-      console.log("=======================================")
-      console.log("");
+      console.log(response);
     });
   };
 
@@ -188,10 +172,7 @@ appname.service('jsonData', function($http,$routeParams) {
     return $http({
       method: 'POST',
       url: markFinishedEndpoint,
-      data: keyword
-    }).then(function(finishedResponse){
-      console.log("Keyword Input : " + finishedResponse.config.data);
-      console.log("Response from Server : " + finishedResponse.data.message);
+      params: {"keyword":keyword}
     })
   }
 

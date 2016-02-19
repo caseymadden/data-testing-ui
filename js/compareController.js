@@ -1,5 +1,3 @@
-var compareApp = angular.module('compareApp', []);
-
 compareApp.controller('compareScreenCtrl', function ($scope, $http) {
  $scope.url = "";
  $scope.getUrl = function(url) {

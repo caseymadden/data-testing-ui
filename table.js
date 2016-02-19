@@ -82,21 +82,21 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
         response['issue'],
         response['note']);
 
-      if(response['typeValue'] == 'cell'){
+      if(response['typeValue'] == 'cell' || response['typeValue'] == 'row'){
         var id = $scope.json.columns[response['colIndex']].columnDef.id;
         $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.approved = response['approve'];
         $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.issue = response['issue'];
         $scope.json.rows[response['rowIndex']].rowData[id].testingStatus.notes = response['note'];
+        if(response['typeValue'] == 'row'){
+          $scope.json.rows[response['rowIndex']].testingStatus.approved = response['approve'];
+          $scope.json.rows[response['rowIndex']].testingStatus.issue = response['issue'];
+          $scope.json.rows[response['rowIndex']].testingStatus.notes = response['note'];
+        }
       } else
       if(response['typeValue'] == 'column'){
         $scope.json.columns[response['colIndex']].testingStatus.approved = response['approve'];
         $scope.json.columns[response['colIndex']].testingStatus.issue = response['issue'];
         $scope.json.columns[response['colIndex']].testingStatus.notes = response['note'];
-      }else
-      if(response['typeValue'] == 'row'){
-        $scope.json.rows[response['rowIndex']].testingStatus.approved = response['approve'];
-        $scope.json.rows[response['rowIndex']].testingStatus.issue = response['issue'];
-        $scope.json.rows[response['rowIndex']].testingStatus.notes = response['note'];
       }
 
       console.log("Passing Data into getInputReturn");

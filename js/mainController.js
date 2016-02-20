@@ -1,4 +1,4 @@
-appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $routeParams){
+appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_ENDPOINT,MARK_FINISHED_ENDPOINT,jsonData, $uibModal, $log, $routeParams){
 
   $('#table_div').on('scroll',function() {
     $('#header_div').scrollLeft($(this).scrollLeft());

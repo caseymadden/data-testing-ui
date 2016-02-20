@@ -1,10 +1,10 @@
-appname.service('jsonData', function($http,$routeParams) {
+appname.service('jsonData', function($http,$routeParams,GET_DATA_ENDPOINT,POST_DATA_ENDPOINT,MARK_FINISHED_ENDPOINT) {
 
   $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
   this.getTableData = function(keyword) {
     return $http({
-      url: path,
+      url: GET_DATA_ENDPOINT,
       withCredentials: true,
       params: {"keyword":keyword},
       method: 'GET'
@@ -16,7 +16,7 @@ appname.service('jsonData', function($http,$routeParams) {
   this.getInputReturn = function(typeValue,keyword,columnID,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
     return $http({
         method: 'POST',
-        url: returnPath,
+        url: POST_DATA_ENDPOINT,
         withCredentials: true,
         params:{
           "type":typeValue,
@@ -43,7 +43,7 @@ appname.service('jsonData', function($http,$routeParams) {
   this.markFinished = function(keyword){
     return $http({
       method: 'POST',
-      url: markFinishedEndpoint,
+      url: MARK_FINISHED_ENDPOINT,
       params: {"keyword":keyword}
     })
   }

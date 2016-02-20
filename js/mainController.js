@@ -1,16 +1,4 @@
-var appname = angular.module('appname', ["ui.bootstrap","ngRoute"]);
-var path = 'http://hcdev9.jaymaul.com/+tls/service/testdata/getData'
-var returnPath = 'http://hcdev9.jaymaul.com/+tls/service/testdata/updateData';
-var markFinishedEndpoint = '';
-
-appname.config(function ($routeProvider){
-  $routeProvider.when('/:keywordSearch', {
-    controller: 'appCtrl',
-    templateUrl: 'table.html'
-  })
-});
-
-appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $routeParams){
+appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_ENDPOINT,MARK_FINISHED_ENDPOINT,jsonData, $uibModal, $log, $routeParams){
 
   $('#table_div').on('scroll',function() {
     $('#header_div').scrollLeft($(this).scrollLeft());
@@ -104,76 +92,4 @@ appname.controller('appCtrl',function ($scope,$http,jsonData, $uibModal, $log, $
       $log.info('Modal dismissed at: ' + new Date());
     });
   }
-});
-
-appname.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, typeValue, keyword, columnID, colIndex, rowIndex, approve, issue, note) {
-
-  $scope.typeValue = typeValue;
-  $scope.keyword = keyword;
-  $scope.columnID = columnID
-  $scope.colIndex = colIndex;
-  $scope.rowIndex = rowIndex;
-  $scope.approve = approve;
-  $scope.issue = issue;
-  $scope.note = note;
-
-  $scope.ok = function () {
-    $uibModalInstance.close({"typeValue" : $scope.typeValue, "keyword" : $scope.keyword, "columnID" : $scope.columnID, "colIndex" : $scope.colIndex, "rowIndex" : $scope.rowIndex, "approve" : $scope.approve, "issue" : $scope.issue, "note" : $scope.note});
-  };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
-
-appname.service('jsonData', function($http,$routeParams) {
-
-  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-
-  this.getTableData = function(keyword) {
-  	return $http({
-  		url: path,
-      withCredentials: true,
-      params: {"keyword":keyword},
-  		method: 'GET'
-  	}).then(function(returnTableData){
-      return returnTableData.data
-    });
-  };
-
-  this.getInputReturn = function(typeValue,keyword,columnID,colIndexValue,rowIndexValue,approvedValue,issueValue,notesValue){
-    return $http({
-        method: 'POST',
-        url: returnPath,
-        withCredentials: true,
-        params:{
-          "type":typeValue,
-          "keyword":keyword,
-          "field":columnID,
-          "colIndex":colIndexValue,
-          "rowIndex":rowIndexValue,
-          "approved":approvedValue,
-          "issue":issueValue,
-          "notes":notesValue
-        }
-    }).success(function(data){
-      console.log("");
-      console.log("=======================================")
-      console.log("From Post JSON file");
-      console.log("Message : " + data["message"]);
-      console.log("=======================================")
-      console.log("");
-    }).then(function(response){
-      console.log(response);
-    });
-  };
-
-  this.markFinished = function(keyword){
-    return $http({
-      method: 'POST',
-      url: markFinishedEndpoint,
-      params: {"keyword":keyword}
-    })
-  }
-
 });

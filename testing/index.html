@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
   <script src="js/main.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/mainController.js"></script>
   <script src="js/modalController.js"></script>
   <script src="js/service.js"></script>
@@ -18,9 +19,8 @@
 <body>
   <div class="container-fluid" ng-controller="appCtrl" style="height:100%;">
     <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-3">
-      <input ng-hide="hideKeywordStuff" class="form-control" placeholder="Enter Keyword..." ng-model="keywordSearch"></input>
-      <a href="#{{keywordSearch}}" ng-hide="hideKeywordStuff" ng-click="hideKeywordStuff = true;"><button class="btn btn-primary">Search</button></a>
-      <a href="/"><button class="btn btn-success" ng-hide="!hideKeywordStuff" ng-click="markFinished(keywordSearch); hideKeywordStuff = false;">Finished</button></a>
+      <input class="form-control" placeholder="Enter Keyword..." ng-model="keywordSearch" required></input>
+      <a href="#{{keywordSearch}}"><button class="btn btn-primary">Search</button></a>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height:80%;">
       <div ng-view style="height:100%; overflow:scroll;">

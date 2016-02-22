@@ -6,8 +6,10 @@ appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_
   });
 
   $("#searchbox").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#searchbtn").click();
+    if($scope.keywordSearch != null){
+      if(event.keyCode == 13){
+          $("#searchbtn").click();
+      }
     }
   });
 

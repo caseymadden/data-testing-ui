@@ -5,6 +5,14 @@ appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_
     $('#freeze_container').scrollTop($(this).scrollTop());
   });
 
+  $("#searchbox").keyup(function(event){
+    if($scope.keywordSearch != null){
+      if(event.keyCode == 13){
+          $("#searchbtn").click();
+      }
+    }
+  });
+
   if ($routeParams.keywordSearch != null){
     jsonData.getTableData($routeParams.keywordSearch).then(function(TableData){
       $scope.json = TableData;

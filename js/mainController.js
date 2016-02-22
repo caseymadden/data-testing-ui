@@ -2,6 +2,15 @@ appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_
 
   $('#table_div').on('scroll',function() {
     $('#header_div').scrollLeft($(this).scrollLeft());
+    $('#freeze_container').scrollTop($(this).scrollTop());
+  });
+
+  $("#searchbox").keyup(function(event){
+    if($scope.keywordSearch != null){
+      if(event.keyCode == 13){
+          $("#searchbtn").click();
+      }
+    }
   });
 
   if ($routeParams.keywordSearch != null){

@@ -5,6 +5,7 @@ html,body{
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+
   #table_div{
     height:100%;
     width:75.00%;
@@ -17,11 +18,38 @@ html,body{
     width:75.00%;
     margin-left:25.00%;
     overflow:hidden;
+  }
+
+  .ngViewClassContainer{
+    height:89%;
+  }
+
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
+  }
+
+  .tableScaleContainer{
+    height:70%;
+  }
+
+    #freeze_container{
+    display:inline-block;
+    *display:inline;
+    float:left;
+    width:25%;
+    height:115%;
+    overflow: hidden;
+  }
+
+  #freeze_container .table{
+    overflow:auto;
   }
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+
   #table_div{
     height:100%;
     width:75.00%;
@@ -34,11 +62,38 @@ html,body{
     width:75.00%;
     margin-left:25.00%;
     overflow:hidden;
+  }
+
+  .ngViewClassContainer{
+    height:89%;
+  }
+
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
+  }
+
+  .tableScaleContainer{
+    height:70%;
+  }
+
+  #freeze_container{
+    display:inline-block;
+    *display:inline;
+    float:left;
+    width:25%;
+    height:115%;
+    overflow: hidden;
+  }
+
+  #freeze_container .table{
+    overflow:auto;
   }
 }
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+
   #table_div{
     height:100%;
     width:75.00%;
@@ -51,6 +106,32 @@ html,body{
     width:75.00%;
     margin-left:25.00%;
     overflow:hidden;
+  }
+
+  .ngViewClassContainer{
+    height:89%;
+  }
+
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
+  }
+
+  .tableScaleContainer{
+    height:70%;
+  }
+
+    #freeze_container{
+    display:inline-block;
+    *display:inline;
+    float:left;
+    width:25%;
+    height:115%;
+    overflow: hidden;
+  }
+
+  #freeze_container .table{
+    overflow:auto;
   }
 }
 
@@ -80,17 +161,4 @@ table{
 
 .table-hover tbody tr:hover > td.danger {
   background-color: #f2dede !important;
-}
-
-#freeze_container{
-  display:inline-block;
-  *display:inline;
-  float:left;
-  width:25%;
-  height:110%;
-  overflow: hidden;
-}
-
-#freeze_container .table{
-  overflow:auto;
 }

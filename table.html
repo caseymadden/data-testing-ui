@@ -1,4 +1,4 @@
-<div style="height:75%;">
+<div class="tableScaleContainer">
 <a href="/"><button class="btn btn-success" ng-click="markFinished(json.keyword);">Finished</button></a>
   <!-- Keyword -->
   <table class="table table-bordered" style="margin-top: 0px; margin-bottom:0px">
@@ -15,7 +15,7 @@
   <div id="freeze_container">
       <table class="table table-condensed table-bordered table-hover tables_not_keyword">
         <tbody>
-          <tr style="height:60px" id="header_div">
+          <tr style="height:80px">
             <th
                 ng-repeat="(k,v) in json.columns track by $index"
                 ng-if="v.columnDef.id == 'rank' || v.columnDef.id == 'url';"
@@ -25,7 +25,8 @@
                 {{ v.columnDef.label }}
             </th>
           </tr>
-          <tr style="height:60px"
+        </div>
+          <tr style="height:80px"
               ng-repeat="(rowIndex, row) in json.rows track by $index"
               ng-class="{ success : row.testingStatus.approved, danger : row.testingStatus.issue }">
             <td
@@ -51,7 +52,7 @@
     <table class="table table-condensed table-bordered table-hover tables_not_keyword" style="margin-bottom: 0px">
       <tbody>
         <!-- COLUMNS -->
-        <tr style="height:60px">
+        <tr style="height:80px">
           <th ng-repeat="(k,v) in json.columns track by $index"
               ng-if="v.columnDef.id != 'rank' && v.columnDef.id != 'url';"
               ng-click="open('column',json.keyword,v.columnDef.id, k, rowIndex, v.testingStatus.approved, v.testingStatus.issue, v.testingStatus.notes)"
@@ -69,7 +70,7 @@
     <table class="table table-condensed table-bordered table-hover tables_not_keyword" style="margin-top:-1px">
       <tbody>
         <!-- ROWS -->
-        <tr style="height:60px"
+        <tr style="height:80px"
             ng-repeat="(rowIndex, row) in json.rows track by $index"
             ng-class="{ success : row.testingStatus.approved, danger : row.testingStatus.issue }">
           <td

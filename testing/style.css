@@ -1,96 +1,168 @@
-  html,body{
-    width:100%;
+html,body{
+  width:100%;
+  height:100%;
+}
+
+/* Small devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+
+  #table_div{
     height:100%;
+    width:75.00%;
+    margin-left:25.00%;
+    overflow-x:scroll;
+    overflow-y:scroll;
   }
 
-  /* Small devices (tablets, 768px and up) */
-  @media (min-width: 768px) {
-    #table_div{
-      height:100%;
-      width:75.00%;
-      margin-left:25.00%;
-      overflow-x:scroll;
-      overflow-y:scroll;
-    }
-
-    #header_div{
-      width:75.00%;
-      margin-left:25.00%;
-      overflow:hidden;
-    }
+  #header_div{
+    width:75.00%;
+    margin-left:25.00%;
+    overflow:hidden;
   }
 
-  /* Medium devices (desktops, 992px and up) */
-  @media (min-width: 992px) {
-    #table_div{
-      height:100%;
-      width:75.00%;
-      margin-left:25.00%;
-      overflow-x:scroll;
-      overflow-y:scroll;
-    }
-
-    #header_div{
-      width:75.00%;
-      margin-left:25.00%;
-      overflow:hidden;
-    }
+  .ngViewClassContainer{
+    height:89%;
   }
 
-  /* Large devices (large desktops, 1200px and up) */
-  @media (min-width: 1200px) {
-    #table_div{
-      height:100%;
-      width:75.00%;
-      margin-left:25.00%;
-      overflow-x:scroll;
-      overflow-y:scroll;
-    }
-
-    #header_div{
-      width:75.00%;
-      margin-left:25.00%;
-      overflow:hidden;
-    }
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
   }
 
-  table{
-    table-layout:fixed;
+  .tableScaleContainer{
+    height:70%;
   }
 
-  .table{
-    margin-bottom:0px;
-  }
-
-  .tables_not_keyword{
-    cursor:pointer;
-  }
-
-  .table tbody tr > td.success {
-    background-color: #dff0d8 !important;
-  }
-
-  .table tbody tr > td.danger {
-    background-color: #f2dede !important;
-  }
-
-  .table-hover tbody tr:hover > td.success {
-    background-color: #d0e9c6 !important;
-  }
-
-  .table-hover tbody tr:hover > td.danger {
-    background-color: #f2dede !important;
-  }
-
-  #freeze_container{
-      display:inline-block;
-      *display:inline;
-      float:left;
-      width:25%;
-      height:110%;
-      overflow: hidden;
+    #freeze_container{
+    display:inline-block;
+    *display:inline;
+    float:left;
+    width:25%;
+    height:115%;
+    overflow: hidden;
   }
 
   #freeze_container .table{
     overflow:auto;
   }
+
+}
+
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  #table_div{
+    height:100%;
+    width:75.00%;
+    margin-left:25.00%;
+    overflow-x:scroll;
+    overflow-y:scroll;
+  }
+
+  #header_div{
+    width:75.00%;
+    margin-left:25.00%;
+    overflow:hidden;
+  }
+
+  .ngViewClassContainer{
+    height:89%;
+  }
+
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
+  }
+
+  .tableScaleContainer{
+    height:70%;
+  }
+
+  #freeze_container{
+  display:inline-block;
+  *display:inline;
+  float:left;
+  width:25%;
+  height:115%;
+  overflow: hidden;
+}
+
+#freeze_container .table{
+  overflow:auto;
+}
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+  #table_div{
+    height:100%;
+    width:75.00%;
+    margin-left:25.00%;
+    overflow-x:scroll;
+    overflow-y:scroll;
+  }
+
+  #header_div{
+    width:75.00%;
+    margin-left:25.00%;
+    overflow:hidden;
+  }
+
+  .ngViewClassContainer{
+    height:89%;
+  }
+
+  .ngViewClass{
+    height:100%;
+    overflow:auto;
+  }
+
+  .tableScaleContainer{
+    height:70%;
+  }
+
+    #freeze_container{
+    display:inline-block;
+    *display:inline;
+    float:left;
+    width:25%;
+    height:115%;
+    overflow: hidden;
+  }
+
+  #freeze_container .table{
+    overflow:auto;
+  }
+
+}
+
+table{
+  table-layout:fixed;
+}
+
+.table{
+  margin-bottom:0px;
+}
+
+.tables_not_keyword{
+  cursor:pointer;
+}
+
+.table tbody tr > td.success {
+  background-color: #dff0d8 !important;
+}
+
+.table tbody tr > td.danger {
+  background-color: #f2dede !important;
+}
+
+.table-hover tbody tr:hover > td.success {
+  background-color: #d0e9c6 !important;
+}
+
+.table-hover tbody tr:hover > td.danger {
+  background-color: #f2dede !important;
+}

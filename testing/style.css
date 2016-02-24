@@ -14,6 +14,13 @@ html,body{
     overflow-y:scroll;
   }
 
+  #table_div_left{
+    height:85%;
+    width:100.00%;
+    overflow-x:hidden;
+    overflow-y:hidden;
+  }
+
   #header_div{
     width:75.00%;
     margin-left:25.00%;
@@ -58,6 +65,13 @@ html,body{
     overflow-y:scroll;
   }
 
+  #table_div_left{
+    height:85%;
+    width:100.00%;
+    overflow-x:hidden;
+    overflow-y:hidden;
+  }
+
   #header_div{
     width:75.00%;
     margin-left:25.00%;
@@ -100,6 +114,13 @@ html,body{
     margin-left:25.00%;
     overflow-x:scroll;
     overflow-y:scroll;
+  }
+
+  #table_div_left{
+    height:85%;
+    width:100.00%;
+    overflow-x:hidden;
+    overflow-y:hidden;
   }
 
   #header_div{

@@ -1,8 +1,8 @@
 appname.controller('appCtrl',function ($scope,$http,GET_DATA_ENDPOINT,POST_DATA_ENDPOINT,MARK_FINISHED_ENDPOINT,jsonData, $uibModal, $log, $routeParams){
 
   $('#table_div').on('scroll',function() {
-    $('#header_div').scrollLeft($(this).scrollLeft());
-    $('#freeze_container').scrollTop($(this).scrollTop());
+    $('div#header_div').scrollLeft($(this).scrollLeft());
+    $('div#table_div_left').scrollTop($(this).scrollTop());
   });
 
   $("#searchbox").keyup(function(event){

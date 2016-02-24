@@ -25,7 +25,11 @@
                 {{ v.columnDef.label }}
             </th>
           </tr>
-        </div>
+        </tbody>
+      </table>
+    <div id="table_div_left">
+      <table class="table table-condensed table-bordered table-hover tables_not_keyword">
+        <tbody>
           <tr style="height:80px"
               ng-repeat="(rowIndex, row) in json.rows track by $index"
               ng-class="{ success : row.testingStatus.approved, danger : row.testingStatus.issue }">
@@ -45,6 +49,8 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
   </div>
 
   <!-- Other header -->

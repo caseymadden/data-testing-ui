@@ -27,7 +27,6 @@ compareApp.controller('compareScreenCtrl', function ($scope, $http, $sce) {
   $http.post('success.json', data, config)
   .success(function (data, status, headers, config) {
   	console.log(data.message);
-  	$scope.postDataResponse = data;
   })
   .error(function(data, status, header, config) {
   	$scope.responseDetails = "Data: " + data +

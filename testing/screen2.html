@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>HTML5 Document</title>
+    <title>Side by side remove common comparison</title>
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
@@ -56,12 +56,9 @@
      </div>
    </div>
   </div>
-  	<p>{{ inputUrl }} </p>
     <div class="frame col-md-6"><iframe src="{{ inputUrl }}"></iframe></div>
-    <div class="frame col-md-6"><iframe src=""></iframe></div>
-
+    <div class="frame col-md-6"><iframe src="{{ removeCommonUrl }}"></iframe></div>
     <div class="container">
-   	 <h2>Post data: {{ postDataResponse }}</h2>
     </div>
  </body>
 </html>

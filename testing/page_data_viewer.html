@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>json-viewer</title>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+
+	<!-- JSON viewer  -->
+	<script src="json-viewer/jquery.json-viewer.js"></script>
+    <link href="json-viewer/jquery.json-viewer.css" type="text/css" rel="stylesheet" />
+    <script src="js/main.js"></script>
+    <script src="js/jsonViewerController.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/viewService.js"></script>
+</head>
+
+<body ng-app="viewerApp" ng-controller="jsonViewCtrl">
+    <div class="container">
+    <br>
+    	<label for="url">Enter a url</label>
+    	<div class="row">
+    		<input type="text" class="form-control col-md-8" id="url" style="width:500px;" 
+    			ng-model="keyword" 
+        		ng-keydown="$event.which === 13 && getPageData(url)">
+    		<input id="button" type="button" value="Go!" class="btn btn-primary col-md-1" style="margin: 0 0 0 5px" 
+        		ng-click="getPageData(url); hide_pre=false">
+    		<div class="col-md-3"></div>
+    	</div>
+    	<br>
+    	<pre id="json-renderer" ng-hide="hide_pre"></pre>
+    	<br>
+    </div>
+</body>
+</html>
